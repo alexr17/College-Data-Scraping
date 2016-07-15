@@ -34,11 +34,10 @@ function parse(messages, commentOutline) {
 			dataSet.push(tempArrayOfVals); //add this to the new dataSet to be formatted
 		}
 	}
-	tools.printCategory("Decision:", commentOutline, dataSet);
-	tools.printCategory("Objective:", commentOutline, dataSet);
 	cleaner.clean(dataSet, commentOutline);
-	tools.printCategory("Objective:", commentOutline, dataSet);
-	
+	//tools.printCategory("Objective:", commentOutline, dataSet);
+	//tools.printCategory("ACT:", commentOutline, dataSet);
+	tools.printCategory("Rank (percentile if rank is unavailable):", commentOutline, dataSet);
 }
 
 //this function takes one source and parses it
