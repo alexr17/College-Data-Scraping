@@ -33,10 +33,10 @@ function parse(messages, commentOutline) {
 		}
 	}
 	cleaner.clean(dataSet, commentOutline);
-	tools.printCategory("Objective:", commentOutline, dataSet);
+	//tools.printCategory("Objective:", commentOutline, dataSet);
 	tools.printCategory("SAT I (breakdown):", commentOutline, dataSet);
-	tools.printCategory("Rank (percentile if rank is unavailable):", commentOutline, dataSet);
-	tools.printCategory("Unweighted GPA (out of 4.0):", commentOutline, dataSet);
+	//tools.printCategory("Rank (percentile if rank is unavailable):", commentOutline, dataSet);
+	//tools.printCategory("Unweighted GPA (out of 4.0):", commentOutline, dataSet);
 }
 
 //this function takes one source and parses it

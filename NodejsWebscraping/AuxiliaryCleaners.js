@@ -5,7 +5,7 @@ module.exports = {
   //this array takes several data values and basically determines if a given "adjacent" corresponds to a section such as critical reading or math.  if does correspond then modifies the data accordingly
  
   modSatArray: function(words, word, scores, adjacent, sections, numIndex, incrementer) {
-    console.log("adjacent: " + adjacent);
+    //console.log("adjacent: " + adjacent);
     var index = sections.map(function(elem){ return elem.replace(/[^A-Z]/g, ''); }).indexOf(adjacent.toUpperCase()); //get the index which is most likely -1
     if (index == -1) {
       index  = sections.indexOf(adjacent.charAt(0).toUpperCase() + adjacent.slice(1));

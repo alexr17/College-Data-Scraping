@@ -41,7 +41,8 @@ module.exports = {
       //sat
       if (satIndex != -1) {
         var sat = getSATScore(dataSet[kk][satIndex]);
-        console.log("SAT: " + sat);
+        //console.log("SAT: " + sat);
+        dataSet[kk][satIndex] = sat.join();
       }
     }
     return dataSet;
@@ -63,7 +64,7 @@ function getSATScore(text) {
   });
   words = words.trim().split(/\s+/g); //get the words of the sat text (split by whitespace)
   
-  console.log("array: " + words);
+  //console.log("array: " + words);
   var numIndex  = -1;
   for (var word of words) { //traverse through the words
     if (!isNaN(word) && word <= 800) { //if it's a number less than 800
