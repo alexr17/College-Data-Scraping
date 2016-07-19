@@ -28,16 +28,15 @@ function parse(messages, commentOutline) {
 			
 			tempArrayOfVals = dataEdit.filter(tempArrayOfVals); //remove white space and non colon values
 			dataEdit.format(tempArrayOfVals, commentOutline); //this will change infostring into the desired output
-			//console.log(tempArrayOfVals.length);
-			//console.log(commentOutline.length);
 			//fs.appendFile('CollegeStatisticsData.csv',tempArrayOfVals.join() + '\n', function(err) {}); //add it to the file
 			dataSet.push(tempArrayOfVals); //add this to the new dataSet to be formatted
 		}
 	}
 	cleaner.clean(dataSet, commentOutline);
-	//tools.printCategory("Objective:", commentOutline, dataSet);
-	//tools.printCategory("ACT:", commentOutline, dataSet);
+	tools.printCategory("Objective:", commentOutline, dataSet);
+	tools.printCategory("SAT I (breakdown):", commentOutline, dataSet);
 	tools.printCategory("Rank (percentile if rank is unavailable):", commentOutline, dataSet);
+	tools.printCategory("Unweighted GPA (out of 4.0):", commentOutline, dataSet);
 }
 
 //this function takes one source and parses it
@@ -93,7 +92,7 @@ request(url, function(error, response, html) {
 
 		//now messages has a list of all the text of each message from one page (~10 or so posts per page)
 		//to add the things from other pages we must traverse the uniqueURLArray
-		for (source of uniqueURLArray) {
+		for (var source of uniqueURLArray) {
 			//now execute stuff
 			//and put stuff from the urls into the file
 			//console.log(tools.getDateTime());

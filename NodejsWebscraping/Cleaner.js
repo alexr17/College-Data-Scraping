@@ -1,31 +1,33 @@
 //this file cleans and tidys all the data
 var nada = 'N/A';
+var auxClean = require("./AuxiliaryCleaners.js");
 
 module.exports = {
   //this function cleans up all the data making things like "3.87ish GPA" into just "3.87"
   clean: function(dataSet, categories) {
-    var gpaIndex = find(categories, 'GPA');
-    var actIndex = find(categories, 'ACT');
-    var decIndex = find(categories, 'Decision');
-    var objIndex = find(categories, 'Objective');
-    var rankIndex = find(categories, 'Rank');
+    var gpaIndex = auxClean.find(categories, 'GPA');
+    var actIndex = auxClean.find(categories, 'ACT');
+    var decIndex = auxClean.find(categories, 'Decision');
+    var objIndex = auxClean.find(categories, 'Objective');
+    var rankIndex = auxClean.find(categories, 'Rank');
+    var satIndex = auxClean.find(categories, 'SAT');
     var decisions = ["Accepted","Waitlisted","Deferred","Rejected"];
     var schools = ["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "Heinz College: Information Systems, Public Policy and Management", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"];
 
     for (var kk = 0; kk < dataSet.length; kk++) {
       //GPA
       if (gpaIndex != -1) {
-        dataSet[kk][gpaIndex] = editNumber(dataSet[kk][gpaIndex], 4, 4.0); // 4.0 max value 4 digits (including the decimal)
+        dataSet[kk][gpaIndex] = getNumber(dataSet[kk][gpaIndex], 4, 4.0); // 4.0 max value 4 digits (including the decimal)
       }
 
       //ACT
       if (actIndex != -1) {
-        dataSet[kk][actIndex] = editNumber(dataSet[kk][actIndex], 2, 36); //36 max score 2 digits
+        dataSet[kk][actIndex] = getNumber(dataSet[kk][actIndex], 2, 36); //36 max score 2 digits
       }
 
       //decision and specific college
       if (decIndex != -1 && objIndex != -1) {
-        var dec = editText(dataSet[kk][decIndex], decisions); //get the decision
+        var dec = auxClean.editText(dataSet[kk][decIndex], decisions); //get the decision
         var otherText = dataSet[kk][decIndex].replace(dec, ""); //remove it from the text
         dataSet[kk][objIndex] = getSchool(otherText, dataSet[kk][objIndex], schools); //get the school
         dataSet[kk][decIndex] = dec; //assign the decision
@@ -33,47 +35,95 @@ module.exports = {
 
       //ranking
       if (rankIndex != -1) {
-        var rank = dataSet[kk][rankIndex].replace(/[^/%. 0-9]/g, ''); //remove all non numbers, keeping ".","/", and "%"
-        
-        var tempRank = 0;
-        for (token of rank.split(' ')) {
-          if (token.match(/[0-9]/g) != null && token.includes('/')) { //if it has numbers and a slash
-            tempRank = (eval(token) * 100).toFixed(1);
-          }
-          if (token.includes('%') && !tempRank) { //if a percent is involved and tempRank hasn't been assigned yet
-            tempRank = parseFloat(token); //get the num value of the rank since it's a percent
-          }
-        }
-        if (!tempRank) {
-          dataSet[kk][rankIndex] = nada;
-          console.log('nada')
-        } else {
-          dataSet[kk][rankIndex] = tempRank;
-          console.log('not nada');
-        }
-        //console.log(dataSet[kk][rankIndex]);
+        dataSet[kk][rankIndex] = getRank(dataSet[kk][rankIndex].replace(/[^/%. 0-9]/g, '')); //remove all non numbers, keeping ".","/", and "%"
       }
 
+      //sat
+      if (satIndex != -1) {
+        var sat = getSATScore(dataSet[kk][satIndex]);
+        console.log("SAT: " + sat);
+      }
     }
     return dataSet;
   }
 };
 
-//this function finds a keyword in a given array and returns the index
-function find(array, keyword) {
-  //console.log(array);
-  //console.log(keyword);
-  for (var zz = 0; zz < array.length; zz++) {
-    if (array[zz].includes(keyword) || keyword.includes(array[zz])) {
-      return zz;
+//this function takes the sat text and returns the values of each section on the sat as a nicely formatted string
+function getSATScore(text) {
+  var sections = ['Critical Reading','Math','Writing'];
+  var scores = [0,0,0];
+  var unassigned = [];
+  var assigned = false;
+  var total = 0;
+  var words = text.replace(/\d+/g, function(match) { //put spaces between the numbers
+    return ' ' + match + ' ';
+  });
+  words = words.replace(/\w+/g, function(match) { //put spaces between any alphanumeric words
+    return ' ' + match + ' ';
+  });
+  words = words.trim().split(/\s+/g); //get the words of the sat text (split by whitespace)
+  
+  console.log("array: " + words);
+  var numIndex  = -1;
+  for (var word of words) { //traverse through the words
+    if (!isNaN(word) && word <= 800) { //if it's a number less than 800
+      //console.log("word: " + word);
+      numIndex = words.indexOf(word) //get the index associated with it
+      //console.log("index: " + numIndex);
+      if (numIndex != 0) { //if the index isn't zero (for the prev val)
+        //console.log("prev");
+        var prev = words[numIndex-1]; //get the value of the prev word
+        assigned = auxClean.modSatArray(words, word, scores, prev, sections, numIndex, -1);
+      }
+      if (numIndex < words.length-1 && !assigned) { //if the index isn't at the end and it hasn't already been assigned
+        //console.log("next");
+        var next = words[numIndex+1]; //get the value of the next word
+        assigned = auxClean.modSatArray(words, word, scores, next, sections, numIndex, +1);
+      }
+      if (!assigned) { //if there were no modifying words found
+        unassigned.push(word); //add the number to the array
+      }
+    } else if (word <= 2400) { //if it's a total score
+      total = word;
+    }
+    assigned = false;
+  }
+  //if there were unassigned things
+  for (var aa = 0; aa < unassigned.length; aa++) {
+    if (scores.indexOf(0) != -1) {
+      scores[scores.indexOf(0)] = unassigned[aa];
     }
   }
-  //console.log("bummer");
-  return -1;
+  return scores;
 }
 
+
+
+function getRank(rank) {
+  var tempRank = 0;
+  for (token of rank.split(' ')) {
+    if (token.match(/[0-9]/g) != null && token.includes('/')) { //if it has numbers and a slash
+      tempRank = (eval(token) * 100).toFixed(1);
+    }
+    if (token.includes('%') && !tempRank) { //if a percent is involved and tempRank hasn't been assigned yet
+      tempRank = parseFloat(token); //get the num value of the rank since it's a percent
+    }
+  }
+  if (!tempRank) {
+    return nada;
+    //console.log('nada')
+  } else {
+    return tempRank;
+    //console.log('not nada');
+  }
+  //console.log(dataSet[kk][rankIndex]);
+
+}
+
+
+
 //this function takes a string that should be a number, the expected length of the number and the maximum number that number should be, and formats it appropriately
-function editNumber(num, numLength, maxVal) {
+function getNumber(num, numLength, maxVal) {
   if ((num) <= maxVal && num.length <= numLength) { //if it's all normal
     return num;
   }
@@ -95,15 +145,7 @@ function editNumber(num, numLength, maxVal) {
   return num;
 }
 
-//this finds one of "options" in the text
-function editText(text, options) {
-  var index = find(options, text);
-  if (index != -1) { //if one of the options is somewhere in the text
-    return options[index];
-  } else {
-    return nada;
-  }
-}
+
 
 //this functions takes the text from the decision, the text from the objective piece and the schools list and determines what school the student applied to
 function getSchool(otherText, objText, schools) {
