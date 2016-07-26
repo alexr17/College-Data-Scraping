@@ -1,5 +1,5 @@
 //this file contains all the helper methods for the cleaner file
-var nada = "N/A";
+var nada = ' N/A';
 
 module.exports = {
   //this array takes several data values and basically determines if a given "adjacent" corresponds to a section such as critical reading or math.  if does correspond then modifies the data accordingly

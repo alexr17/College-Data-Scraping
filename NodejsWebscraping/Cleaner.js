@@ -1,5 +1,5 @@
 //this file cleans and tidys all the data
-var nada = 'N/A';
+var nada = ' N/A';
 var auxClean = require("./AuxiliaryCleaners.js");
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     var rankIndex = auxClean.find(categories, 'Rank');
     var satIndex = auxClean.find(categories, 'SAT');
     var decisions = ["Accepted","Waitlisted","Deferred","Rejected"];
-    var schools = ["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "Heinz College: Information Systems, Public Policy and Management", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"];
+    var schools = ["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "\"Heinz College: Information Systems, Public Policy and Management\"", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"];
 
     for (var kk = 0; kk < dataSet.length; kk++) {
       //GPA
@@ -35,14 +35,14 @@ module.exports = {
 
       //ranking
       if (rankIndex != -1) {
-        dataSet[kk][rankIndex] = getRank(dataSet[kk][rankIndex].replace(/[^/%. 0-9]/g, '')); //remove all non numbers, keeping ".","/", and "%"
+        dataSet[kk][rankIndex] = getRank(dataSet[kk][rankIndex].replace(/[^/% 0-9]/g, '')); //remove all non numbers, keeping ".","/", and "%"
       }
 
       //sat
       if (satIndex != -1) {
         var sat = getSATScore(dataSet[kk][satIndex]);
         //console.log("SAT: " + sat);
-        dataSet[kk][satIndex] = sat.join();
+        dataSet[kk][satIndex] = "\"" + sat.join() + "\""; //for csv stuff
       }
     }
     return dataSet;
@@ -103,7 +103,7 @@ function getSATScore(text) {
 function getRank(rank) {
   var tempRank = 0;
   for (token of rank.split(' ')) {
-    if (token.match(/[0-9]/g) != null && token.includes('/')) { //if it has numbers and a slash
+    if (token.match(/[0-9]+/g)  != null && token.match(/[0-9]+/g).length > 1 && token.includes('/')) { //if it has numbers and a slash
       tempRank = (eval(token) * 100).toFixed(1);
     }
     if (token.includes('%') && !tempRank) { //if a percent is involved and tempRank hasn't been assigned yet
@@ -130,7 +130,7 @@ function getNumber(num, numLength, maxVal) {
   }
 
   //if it's not
-  num = num.replace(/[^\d.-]/g, ''); //remove all non numeric characters but keep the dot
+  num = num.replace(/[^\d.-]/g, ' '); //remove all non numeric characters but keep the dot
   if (num.length > numLength) {//if there are too many numbers 
 
     if (num.slice(0,numLength) <= maxVal) { //if the first few characters are correct but theres some baggage in there
@@ -138,6 +138,8 @@ function getNumber(num, numLength, maxVal) {
     } else {
       //debug time and manual correction stuff yay
       console.log("error with num");
+      console.log("The number line is: " + num + ".  The length should be: " + numLength + ".  The max value should be: " + maxVal);
+      return "N/A";
     }
   }
   else if (num == '' || num > maxVal) {//person didn't provide their gpa
@@ -150,7 +152,7 @@ function getNumber(num, numLength, maxVal) {
 
 //this functions takes the text from the decision, the text from the objective piece and the schools list and determines what school the student applied to
 function getSchool(otherText, objText, schools) {
-  var text = (otherText + " " + objText).split(' '); //split the text based on the spaces so CIT ECE => ["CIT", "ECE"]
+  var text = (otherText + " " + objText).replace(/[\w]+/, ' ').split(/\s+/g); //split the text based on the spaces so CIT ECE => ["CIT", "ECE"]
   var mostMatches = 0;
   var bestIndex = -1;
 
