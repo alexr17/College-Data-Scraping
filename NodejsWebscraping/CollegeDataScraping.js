@@ -36,18 +36,18 @@ function parse(messages, commentOutline) {
 			tempArrayOfVals = message.split(splitter); //split the text into an array based on the breaks
 			//console.log("------------------");
 
-			//console.log("before: ");
+			console.log("before: ");
 
 			tempArrayOfVals = dataEdit.filter(tempArrayOfVals); //remove white space and non colon values
-			//console.log(tempArrayOfVals);
+			console.log(tempArrayOfVals);
 
 			dataEdit.format(tempArrayOfVals, commentOutline); //this will change infostring into the desired output
 			dataSet.push(tempArrayOfVals); //add this to the new dataSet to be formatted
 			
 
-			//console.log("after: ");
-			//console.log(tempArrayOfVals);
-			console.log(tempArrayOfVals.length);
+			console.log("after: ");
+			console.log(tempArrayOfVals);
+			//console.log(tempArrayOfVals.length);
 		}
 		splitter = '';
 	}
@@ -59,7 +59,7 @@ function parse(messages, commentOutline) {
 	//fs.appendFile('CollegeStatisticsData.csv',commentOutline.join() + '\n', function(err) {}); //add it to the file
 	//tools.outputData(dataSet, commentOutline, )
 	for (data of dataSet) {
-		fs.appendFile('CollegeStatisticsData.csv',data.join() + '\n', function(err) {});
+		//fs.appendFile('CollegeStatisticsData.csv',data.join() + '\n', function(err) {});
 	}
 	//}
 }

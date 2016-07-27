@@ -26,20 +26,23 @@ module.exports = {
   format: function(lines, headers) {
     for (var ii = 0; ii < headers.length; ii++) { //filter through the headers
       if (lines[ii] != null && (ii == 0 || recognizeHeader(lines[ii].slice(0, lines[ii].indexOf(sep) + 1 ), headers[ii], headers, ii) )) { //if the next line isn't null and has some sort of semblance of a column header... cuz people are making all sorts of shit up for these column headers
-        console.log(lines[ii] + " has a header similar to this: " + headers[ii])
+        //console.log(lines[ii] + " has a header similar to this: " + headers[ii])
         lines[ii] = lines[ii].slice(lines[ii].indexOf(sep)+1); //remove the header part
 
         //if it's not a header and has that wretched [size+=2] then replace it
       } else {
         var index = headers.length; //for if lines[ii] is null
         if (lines[ii] != null) {
-          index = headers.indexOf(lines[ii].slice(0,lines[ii].indexOf(sep)+1)); //get the index in headers of the misplaced header that appears in lines
+          index = headers.indexOf(lines[ii].slice(0,lines[ii].indexOf(sep)+1).trim()); //get the index in headers of the misplaced header that appears in lines
         }
         if (index != -1) { //if it exists
           if (index > ii) {//if there have been some lines skipped
+            //console.log("lines skipped from: " + ii + " to " + index);
+            //console.log("The line is: " + lines[ii]);
             for (var jj = ii; jj < index; jj++) {
               lines.splice(jj, 0, nada); //add an N/A to fix it for each spot in between the two
             }
+
             ii = index; //shift the incrementer down a bit
             if (index != headers.length) {
               lines[ii] = lines[ii].replace(headers[ii], ""); //remove the header part
@@ -58,7 +61,9 @@ module.exports = {
               console.log("The header should've been: " + headers[ii]);
               console.log("But it was: " + lines[ii]);
               console.log("And it was meant to be higher up the ladder at: " + index)
-              console.log("^^^^^^^^");}}
+              console.log("^^^^^^^^");
+            }
+          }
         } else { //if it doesn't exist
           if ((lines[ii+1] != null && lines[ii+1].includes(headers[ii+1])) || (lines[ii+2] != null && lines[ii+2].includes(headers[ii+2]))) {//someone used the wrong header name but the next one is the correct one or the one after that is correct
             
