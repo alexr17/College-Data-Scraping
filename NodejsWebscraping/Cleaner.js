@@ -130,7 +130,7 @@ function getNumber(num, numLength, maxVal) {
   }
 
   //if it's not
-  num = num.replace(/[^\d.-]/g, ' '); //remove all non numeric characters but keep the dot
+  num = num.replace(/[^\d.]/g, ' ').trim(); //remove all non numeric characters but keep the dot
   if (num.length > numLength) {//if there are too many numbers 
 
     if (num.slice(0,numLength) <= maxVal) { //if the first few characters are correct but theres some baggage in there
@@ -139,24 +139,26 @@ function getNumber(num, numLength, maxVal) {
       //debug time and manual correction stuff yay
       console.log("error with num");
       console.log("The number line is: " + num + ".  The length should be: " + numLength + ".  The max value should be: " + maxVal);
-      return "N/A";
+      return nada;
     }
   }
   else if (num == '' || num > maxVal) {//person didn't provide their gpa
-    num = nada;
+    return nada
   }
   return num;
 }
 
-
+//console.log(getNumber(" 33 (31 En, 33 Ma, 33 Sci, 36 Rd, 29 Wr)", 2, 36));
 
 //this functions takes the text from the decision, the text from the objective piece and the schools list and determines what school the student applied to
 function getSchool(otherText, objText, schools) {
-  var text = (otherText + " " + objText).replace(/[\w]+/, ' ').split(/\s+/g); //split the text based on the spaces so CIT ECE => ["CIT", "ECE"]
+  var text = (otherText + " " + objText).replace(/[^\w]+/g, ' ').split(/\s+/g); //split the text based on the spaces so CIT ECE => ["CIT", "ECE"]
   var mostMatches = 0;
   var bestIndex = -1;
-
+  //console.log(text);
+  //console.log(text.map(function(x) {return x.toUpperCase();}));
   for (var xx = 0; xx < schools.length; xx++) {
+    //console.log(schools[xx].replace(/[^A-Z]/g, ''));
     if (text.map(function(x) {return x.toUpperCase();}).indexOf(schools[xx].replace(/[^A-Z]/g, '')) != -1 || (otherText + " " + objText).includes(schools[xx])) { //if they abbreviated the college or if the college name is somewhere in the text
       return schools[xx];
     }
@@ -178,3 +180,5 @@ function getSchool(otherText, objText, schools) {
   }
   return nada;
 }
+
+console.log(getSchool("   Accepted- CFA: Architecture!  Objective:", "N/A",["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "\"Heinz College: Information Systems, Public Policy and Management\"", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"]));

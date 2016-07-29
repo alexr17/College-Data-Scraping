@@ -41,5 +41,9 @@ module.exports = {
     } else {
       return nada;
     }
+  },
+
+  capFL: function(str) { //capitalize the first letter of a string
+  return str.charAt(0).toUpperCase + str.slice(1).toLowerCase();
   }
 };

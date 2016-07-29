@@ -124,9 +124,9 @@ module.exports = {
 //it basically removes all the non alphanumeric values and replaces them with spaces, converting these words into arrays, searching for matches
 //if at least 20% of the words match, then i return true
 function recognizeHeader(expected, actual, headers, index) {
-  if (headers.indexOf(capFL(actual)) == index) {//if it matches exactly
+  if (headers.indexOf(auxClean.capFL(actual)) == index) {//if it matches exactly
     return true;
-  } else if (headers.indexOf(capFL(actual)) == -1) { //if it doesn't exist
+  } else if (headers.indexOf(auxClean.capFL(actual)) == -1) { //if it doesn't exist
     expected = expected.replace(/\([^\)]*\)/g,'').replace(/[^ \w+]/g, ''); //replace all punctuation
     actual = actual.replace(/\([^\)]*\)/g,'').replace(/[^ \w+]/g, ''); //remove all non alphanumeric values
     //now all the junk has been filtered out --> time for recognition
@@ -155,6 +155,4 @@ function isSimilar(str1, str2) {
   }
   return false;
 }
-function capFL(str) { //capitalize the first letter of a string
-  return str.charAt(0).toUpperCase + str.slice(1).toLowerCase();
-}
+
