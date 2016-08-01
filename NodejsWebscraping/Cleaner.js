@@ -181,4 +181,4 @@ function getSchool(otherText, objText, schools) {
   return nada;
 }
 
-console.log(getSchool("   Accepted- CFA: Architecture!  Objective:", "N/A",["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "\"Heinz College: Information Systems, Public Policy and Management\"", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"]));
+//console.log(getSchool("   Accepted- CFA: Architecture!  Objective:", "N/A",["College of Engineering", "Carnegie Institute of Technology", "College of Fine Arts", "Dietrich College of Humanities and Social Sciences", "\"Heinz College: Information Systems, Public Policy and Management\"", "Mellon College of Science", "School of Computer Science", "Tepper School of Business"]));
