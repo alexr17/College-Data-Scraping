@@ -1,0 +1,119 @@
+-Brown University
+  Africana Studies
+  American Studies
+  Anthropology
+  Applied Mathematics
+  Applied Mathematics-Biology
+  Applied Mathematics-Computer Science
+  Applied Mathematics-Economics
+  Archaeology and the Ancient World
+  Architecture
+  Astronomy
+  Biochemistry & Molecular Biology
+  Biology
+  Biomedical Engineering
+  Biophysics
+  Business, Entrepreneurship and Organizations
+  Chemical Physics
+  Chemistry
+  Classics
+  Cognitive Neuroscience
+  Cognitive Science
+  Comparative Literature
+  Computational Biology
+  Computer Science
+  Computer Science-Economics
+  Contemplative Studies
+  Development Studies
+  East Asian Studies
+  Economics
+  Education Studies
+  Egyptology and Assyriology
+  Engineering
+  Engineering and Physics
+  English
+  Environmental Studies
+  Ethnic Studies
+  French and Francophone Studies
+  Gender and Sexuality Studies
+  Geological Sciences
+  Geology-Biology
+  Geology-Chemistry
+  Geology-Physics/Mathematics
+  German Studies
+  Health & Human Biology
+  Hispanic Literatures and Culture
+  History
+  History of Art and Architecture
+  Independent Concentration
+  International Relations
+  Italian Studies
+  Judaic Studies
+  Latin American and Caribbean Studies
+  Linguistics
+  Literary Arts
+  Marine Biology
+  Mathematics
+  Mathematics-Computer Science
+  Mathematics-Economics
+  Medieval Cultures
+  Middle East Studies
+  Modern Culture and Media
+  Music
+  Neuroscience
+  Philosophy
+  Physics
+  Physics and Philosophy
+  Political Science
+  Portuguese and Brazilian Studies
+  Psychology
+  Public Health
+  Public Policy
+  Religious Studies
+  Renaissance and Early Modern Studies
+  Science and Society
+  Slavic Studies
+  Social Analysis and Research
+  Sociology
+  South Asian Studies
+  Theatre Arts and Performance Studies
+  Urban Studies
+  Visual Art
+-Columbia University
+  Columbia College
+  School of Engineering and Applied Science
+  School of General Studies
+-Cornell University
+  College of Agriculture and Life Sciences
+  College of Architecture, Art, and Planning
+  College of Arts and Sciences
+  College of Business
+  School of Applied Economics and Management
+  College of Engineering
+  School of Hotel Administration
+  College of Human Ecology
+  School of Industrial and Labor Relations
+-Dartmouth College
+-Harvard University
+-Princeton University
+-University of Pennsylvania
+-Yale University
+-California Institute of Technology
+-Carnegie Mellon University
+-Duke University
+-Emory University
+-Georgetown University
+-Johns Hopkins University
+-Massachusetts Institute of Technology
+-Northwestern University
+-Rice University
+-Stanford University
+-University of California - Berkeley
+-University of California - Los Angeles
+-University of Chicago
+-University of Michigan - Ann Arbor
+-University of North Carolina - Chapel Hill
+-University of Notre Dame
+-University of Virginia
+-Vanderbilt University
+-Washington University in St. Louis
