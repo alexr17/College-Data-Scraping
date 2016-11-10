@@ -1,8 +1,6 @@
 //This file will go through and pull several hundreds of URLs from College Confidential with the goal of compiling all the related URLs corresponding to results from colleges
 //var urlStruct = "http://talk.collegeconfidential.com/search?Page=p" + pageNum + "&adv=1&search=&title=results&author=&cat=" + collegeNum + "&tags=&discussion_d=1&within=1+day&date=";
 
-
-
 var request = require("request"); //getting html
 var cheerio = require("cheerio"); //parsing html
 var async = require("async");

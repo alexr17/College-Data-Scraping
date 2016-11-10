@@ -3,9 +3,9 @@ var cheerio = require("cheerio"); //parsing html
 var fs = require("fs"); //file writing
 
 //other files
-var tools = require('./PropFunc');
-var dataEdit = require('./DataEdit.js');
-var cleaner = require('./Cleaner.js');
+var tools = require('/Users/NodejsWebscraping/proprietaryStuff/PropFunc.js');
+var dataEdit = require('/Users/NodejsWebscraping/proprietaryStuff/DataEdit.js');
+var cleaner = require('/Users/NodejsWebscraping/proprietaryStuff/Cleaner.js');
 
 var nada = '';
 
@@ -148,9 +148,9 @@ function runRequest(lines) {
 	}
 }
 
-
+//get urls
 var lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream('CollegeURLs.txt')
+  input: require('fs').createReadStream('/Users/NodejsWebscraping/data/CollegeURLs.txt')
 });
 
 var uniqueURLArray = [];
@@ -167,5 +167,6 @@ var continueRequesting = true;
 var numUrlsToPull = 415;
 
 lineReader.on('close', function () {
+	//runrequest on urls
 	runRequest(urls);
 });
